@@ -1,7 +1,16 @@
 #!/bin/python
 
-# Okay, let's first set the game as itself. The program will parse it accordingly, here's an example: 
-# The keywords ALWAYS go inside brackets. They're case insensitive. Options are defined by a semicolon before them. The names should be unique. 
+# The game is organized in stages and options inside each one. Each option will take you to the
+# defined stage. If a stage has no options, it will be assumed that it is the end of the game.
+# There are two special stage names, [START] and [END], and as their names suggest it, the first is
+# the entry point and the latter the end. 
+#
+# The format is the following: 
+
+# [STAGE_NAME] {
+#   A string of text
+#   Something happened! You can [an option:NEXT_STAGE_NAME] or [another option:OTHER_STAGE_NAME]
+# }
 
 # Game definition
 game = """
@@ -9,10 +18,7 @@ game = """
         You suddenly wake up in the middle of nowhere, you can't remember anything and there's
         nothing around you to give you a hint of were you came from, you try to remember but nothings comes
         to your mind. There's a forest close to you, and suddenly you notice that something moves
-        rapidly in the shadows beneath the trees. You are scared.
-        
-        :START_RUN          You quickly stand up and try to run away from it. 
-        :START_INVESTIGATE  You face your fears and get ready to face it, whatever it is. 
+        rapidly in the shadows beneath the trees. You are scared, but you can either [run:START_RUN] away or [investigate:START_INVESTIGATE].
     }
     [START_RUN] {
         You run asdasdasds
@@ -29,14 +35,13 @@ init()
 
 # Color definitions
 stage_color     = Fore.GREEN
-option_color    = Fore.CYAN
-choose_color    = Fore.LIGHTRED_EX
+option_color    = Fore.LIGHTRED_EX
+choose_color    = Fore.CYAN
 error_color     = Fore.RED
 
 # Syntax definition
-stage_regex     = r"\[([A-Za-z0-9_-]+)\][ \t]*{([^{}]*)}"
-option_regex    = r":([^ \t]+)[ \t]?(.*)"
-option_char     =  ':'
+stage_regex     = r"\[([A-Za-z0-9_-]+)\][ \t\r\n]*{([^{}]*)}"
+option_regex    = r"\[([^\[\]:]+):([a-zA-Z0-9_.-]+)\]"
 
 # Main script
 stage_regex = re.compile(stage_regex)
@@ -61,19 +66,19 @@ for stage in stage_regex.findall(game):
         if line == '':
             continue
         
-        # If the line begins with a semicolon, it's an option
-        if line[0:1] == option_char:
-            option = option_regex.match(line)
+        # For every choice we find we'll add it to the parsed game and update the string accordingly
+        for option in option_regex.findall(line):
             option_name = option[1].upper()
-            option_text = option[2].strip()
+            option_text = option[0].strip().upper()
 
-            parsed_game[stage_name]['options'][option_name] = option_text
+            parsed_game[stage_name]['options'][option_text] = option_name
 
-            if parsed_game[stage_name]['options'][option_name] == '':
-                exit(f"{error_color}The option {parsed_game[stage_name]['options'][option_name]} in stage {stage_name} is missing the text!")
-        # If not, it's just text
-        else:
-            parsed_game[stage_name]['text'].append(line)
+            if parsed_game[stage_name]['options'][option_text] == '':
+                exit(f"{error_color}The option {parsed_game[stage_name]['options'][option_text]} in stage {stage_name} is missing the text!")
+            
+            line = line.replace(f"[{option[0]}:{option[1]}]", f"{option_color}{option_text}{stage_color}")
+        
+        parsed_game[stage_name]['text'].append(line)
 
 # The game :)
 current_stage = 'START'
@@ -93,19 +98,13 @@ while current_stage != 'END':
     if len(parsed_game[current_stage]['options']) == 0:
         break
 
-    # And the options
-    for index, option in enumerate(parsed_game[current_stage]['options'].values(), start=1):
-        print(f"{option_color}{index}. {option}")
-    print()
-
     # We'll wait for the user to select an option and we'll switch to the selected stage
-    while True:
-        user_option = input(f"{choose_color}=> What do you choose? ")
-        if user_option.isnumeric():
-            user_option = int(user_option)
-            if user_option > 0 and user_option <= len(parsed_game[current_stage]['options']):
-                current_stage = list(parsed_game[current_stage]['options'])[user_option - 1]
-                break
+    user_option = ''
+    while user_option not in parsed_game[current_stage]['options']:
+        user_option = input(f"{choose_color}=> What do you choose? {option_color}").strip().upper()
+        # TODO: Implement distance.levenshtein() to handle user typos
+
+    current_stage = parsed_game[current_stage]['options'][user_option]
 
 print(f"{stage_color}- THE END -")
 print()

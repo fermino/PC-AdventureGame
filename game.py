@@ -18,13 +18,21 @@ game = """
         You suddenly wake up in the middle of nowhere, you can't remember anything and there's
         nothing around you to give you a hint of were you came from, you try to remember but nothings comes
         to your mind. There's a forest close to you, and suddenly you notice that something moves
-        rapidly in the shadows beneath the trees. You are scared, but you can either [run:START_RUN] away or [investigate:START_INVESTIGATE].
+        rapidly in the shadows beneath the trees. You are scared, but you can either [run:RUN] away or [investigate:INVESTIGATE].[:DOUBT]
     }
-    [START_RUN] {
+    [RUN] {
         You run asdasdasds
     }
-    [START_INVESTIGATE] {
-        Your fear is big but your curiosity is bigger. 
+    [INVESTIGATE] {
+        Your fear is big but your curiosity is bigger. You stand up and carefully start walking towards the trees. As you approach them you
+        start feeling more and more uneasy until a giant comes out of the trees and tries to crush you with his giant feet! You start running
+        but clearly his legs are a lot longer than yours. ou see a tiny hole between two rocks where you could hide, but you're not sure if
+        you'll fit there. You can either try to [hide:HIDE] or keep [running:KEEP_RUNNING].
+    }
+    [DOUBT] {
+        Your have trouble making a decision, and while you try to think a giant comes out of the trees, trying to catch you. 
+        You try to run away but it's too late, he reaches you and gets ready to crush you, but right before that happens you wake up.
+        Luckily, it was just a dream.
     }
 """
 
@@ -41,7 +49,7 @@ error_color     = Fore.RED
 
 # Syntax definition
 stage_regex     = r"\[([A-Za-z0-9_-]+)\][ \t\r\n]*{([^{}]*)}"
-option_regex    = r"\[([^\[\]:]+):([a-zA-Z0-9_.-]+)\]"
+option_regex    = r"\[([^\[\]:]*):([a-zA-Z0-9_.-]+)\]"
 
 # Main script
 stage_regex = re.compile(stage_regex)
@@ -99,7 +107,7 @@ while current_stage != 'END':
         break
 
     # We'll wait for the user to select an option and we'll switch to the selected stage
-    user_option = ''
+    user_option = False
     while user_option not in parsed_game[current_stage]['options']:
         user_option = input(f"{choose_color}=> What do you choose? {option_color}").strip().upper()
         # TODO: Implement distance.levenshtein() to handle user typos

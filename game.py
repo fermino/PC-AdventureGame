@@ -87,7 +87,7 @@ choose_color    = Fore.CYAN
 error_color     = Fore.RED
 
 # Welcome message :)
-print("Welcome to this game, where you can shape the adventure you'll have. But beware, even when you can choose your path, the game has an objective that YOU must discover. There are different endings, but is up to you to discover The One.")
+print(f"{option_color}Welcome to this game, where you can shape the adventure you'll have. But beware, even when you can choose your path, the game has an objective that YOU must discover. There are different endings, but is up to you to discover The One.")
 
 # Syntax definition
 stage_regex     = r"\[([A-Za-z0-9_-]+)\][ \t\r\n]*{([^{}]*)}"

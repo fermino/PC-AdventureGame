@@ -24,7 +24,7 @@ game = """
     You turn back to face whatever that thing is and then you see it. It looks like a man but it's at least 3 times bigger. It has a huge nose and a somewhat destroyed club in one hand. It looks like the typical giant you would see in movies but now that you see it, it's for sure twice as terrifying! He tries to crush you with his feet, and you manage to avoid him a couple of times, but he finally gets to you. You suddenly wake up and realize it was all just a dream...
 }
 [ESCAPE] {
-    You keep running and you happily find out that the giant got quickly distracted with something and is now far behind you. You get to that shiny thing and find out it's a bottle with a liquid that says "a trip home". It reminds you of alice in wonderland and you feel ready to take it, but right before you do it someone screams in the distance: "WAIT, WAIT!". You can either [drink:DRINK] it or [wait:WAIT]. 
+    You keep running and you happily find out that the giant got quickly distracted with something and is now far behind you. You get to that shiny thing and find out it's a bottle filled with a weird liquid, it is near the edge of a cliff and has a label that says "a trip home". It certainly reminds you of alice in wonderland and you feel ready to take it, but right before you do it someone screams in the distance: "WAIT, WAIT!". You can either [drink:DRINK] it or [wait:WAIT]. 
 }
 [DRINK] {
     You decide to drink it no matter what, you are actually tired of this whole thing. As you do so, you start feeling sick and dizzy. "NO, IT WAS A TRAP!" screams a girl that just arrives at your side. "Guess she was the voice I heard" you think. She tries to help you but there's not much she can do, as what you took is more powerful than any known antipoison. "Wait, no, no..." She sounds worried and gives you something to drink, and you feel better, but not for long. She tries to explain you that you have a mission to accomplish and something need need your help with, but her voice sounds every time further away, until there's nothing to hear, and nothing to say. 
@@ -39,7 +39,7 @@ game = """
     You decide this is not a risk you're taking today. It still makes you uncomfortable to say no, you feel you should help. "But she looked really worried" you think, trying to reason with yourself, but nothing will make you change your mind. She gives you another bottle to take and as you take it everything becomes blur and vanishes away. "Oh, just a dream" you think as you wake up. But there's something that feels odd, and the tiny scratch in your hand leaves you thinking. "I should've done something better" you say...
 }
 [INVESTIGATE] {
-    Your fear is big but your curiosity is bigger. You stand up and carefully start walking towards the trees. As you approach them you start feeling more and more uneasy until a giant comes out of the trees and tries to crush you with his giant feet! You start running but clearly his legs are a lot longer than yours. You see a tiny space beneath two rocks where you could hide, but you're not sure if you'll fit there. You can either try to [hide:HIDE] or keep [running:KEEP_RUNNING], but before you can decide you see a [firearm:FIGHT] 20 feet away.
+    Your fear is big but your curiosity is bigger. You stand up and carefully start walking towards the trees. As you approach them you start feeling more and more uneasy until a giant comes out of the trees and tries to crush you with his giant feet! You start running but clearly his legs are a lot longer than yours. You see a tiny space beneath two rocks where you could hide, but you're not sure if you'll fit there. You can either try to [hide:HIDE] or [keep running:KEEP_RUNNING], but before you can decide you see a [firearm:FIGHT] you could use, 20 feet away.
 }
 [HIDE] {
     You decide to reach those rocks and try to hide beneath them, but as you enter you feel that the floor doesn't support you anymore. You're falling, and as you hit the rock some meters below, you start hearing voices around you. Everything's dark and it's hard to understand them as dizzy as you are after the fall, but you manage to hear "He needs to go back, and he will not remember any of this". "Wait, what? How that I'm not gonna remember this?!" You start feeling scared, but as someone gently touches your head you start falling asleep, starting to wonder how you got there. But now, you need to [wake up:START]. 
@@ -64,9 +64,7 @@ game = """
     You make an effort to reach the firearm, and when you finally reach it, it transforms into a sword! "Weird" you think, but honestly it's the only thing you have in hand to help you. You fight and fight and fight, until that giant is finally down. You see more coming, and for some reason you feel you need to face them, so you do. Somehow you have a lot more strength than usual, and as you finish defeating them you see some tiny people (some of them with wings) getting around you. You don't fully understand everything but you feel you've already been there, and as they hug you and cheer you, you feel everything's alright. A girl that looks familiar gives you something "to return home", she says. As you take the small bottle you wonder if you shouldn't [stay:STAY] there, as it felt like if you had already been there for a lot longer than you knew. At the same time you remember your family at home, and feel that you should probably [return:RETURN].
 }
 [STAY] {
-    You decide to stay, and the more time it passes the less you remember the place you came from. 
-    You stay with this new people you met, and with time, you end up having a family here. 
-    In the end, it feels like nothing could've been different. 
+    You decide to stay, and the more time it passes the less you remember the place you came from. You stay with this new people you met, and with time, you end up having a family here. In the end, it feels like nothing could've been different. 
 }
 [RETURN] {
     You take the bottle and without thinking too much you take it. You wake up, you're home, in your bed. "What time is it?" You say... It's 7:00, and your alarm is ringing. "Guess it was all a dream" you say, but as you try to you realize you can't even recall most of the details. As you get ready for school for some reason you look at your left hand. You see a small scratch that makes you smile, but to be honest, you don't really know the why...
@@ -87,6 +85,9 @@ stage_color     = Fore.GREEN
 option_color    = Fore.LIGHTRED_EX
 choose_color    = Fore.CYAN
 error_color     = Fore.RED
+
+# Welcome message :)
+print("Welcome to this game, where you can shape the adventure you'll have. But beware, even when you can choose your path, the game has an objective that YOU must discover. There are different endings, but is up to you to discover The One.")
 
 # Syntax definition
 stage_regex     = r"\[([A-Za-z0-9_-]+)\][ \t\r\n]*{([^{}]*)}"

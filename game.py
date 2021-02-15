@@ -75,12 +75,14 @@ game = """
 """
 
 import re
+
+colorama_enabled = False
 try:
     from colorama import init, Fore
     init()
     colorama_enabled = True
 except ModuleNotFoundError:
-    colorama_enabled = False
+    pass
 
 # TODO: Actually implement the distance thing. It doesn't seem to be installed in all systems, though.
 

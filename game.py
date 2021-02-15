@@ -75,16 +75,26 @@ game = """
 """
 
 import re
-from colorama import init, Fore
+try:
+    from colorama import init, Fore
+    init()
+    colorama_enabled = True
+except ModuleNotFoundError:
+    colorama_enabled = False
 
 # TODO: Actually implement the distance thing. It doesn't seem to be installed in all systems, though.
-init()
 
 # Color definitions
-stage_color     = Fore.GREEN
-option_color    = Fore.LIGHTRED_EX
-choose_color    = Fore.CYAN
-error_color     = Fore.RED
+if colorama_enabled:
+    stage_color     = Fore.GREEN
+    option_color    = Fore.LIGHTRED_EX
+    choose_color    = Fore.CYAN
+    error_color     = Fore.RED
+else:
+    stage_color     = ''
+    option_color    = ''
+    choose_color    = ''
+    error_color     = ''
 
 # Welcome message :)
 print(f"{option_color}Welcome to this game, where you can shape the adventure you'll have. But beware, even when you can choose your path, the game has an objective that YOU must discover. There are different endings, but is up to you to discover The One.")
